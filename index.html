@@ -6,167 +6,241 @@
 <title>Cyber Portfolio</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Segoe UI,Arial,sans-serif;background:#000;color:#fff}
-:root{--green:#00ff88}
+body{font-family:'Segoe UI',sans-serif,monospace;background:#0d0d0f;color:#c5c6c7;scroll-behavior:smooth}
 
+:root{
+  --green:#009966;
+  --blue:#3366cc;
+  --red:#882222;
+  --purple:#5500aa;
+  --dark:#c5c6c7;
+  --card-bg:#1b1b1f;
+  --tab-bg:#1f1f23;
+  --modal-bg:#161618;
+  --skill-opacity:0.6;
+}
+
+/* Header */
 header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:30px 8%;
-  border-bottom:1px solid #111
+  padding:50px 8%;
+  background:#111;
+  border-radius:16px;
 }
-
-.name{font-size:2rem;color:var(--green);font-weight:600}
-
-.links a{
-  margin-left:20px;
-  color:#fff;
-  text-decoration:none;
-  transition:.3s
+.profile{display:flex;align-items:center;gap:25px}
+.avatar{
+  width:120px;height:120px;
+  border-radius:50%;
+  background:#222 url('https://i.imgur.com/8bit-placeholder.png') center/cover no-repeat;
+  border:3px solid var(--green);
 }
-
+.name{font-size:2.5rem;font-weight:700;color:var(--green);position:relative;display:inline-block;}
+.name::after{
+  content:'';
+  position:absolute;
+  left:0;top:0;
+  width:100%;height:100%;
+  background:var(--green);
+  mix-blend-mode:screen;
+  clip-path:inset(0 100% 0 0);
+  animation:glitch 2s infinite steps(2);
+}
+@keyframes glitch{
+  0%{clip-path:inset(0 100% 0 0)}
+  20%{clip-path:inset(10% 0 20% 0)}
+  40%{clip-path:inset(20% 0 10% 0)}
+  60%{clip-path:inset(5% 100% 5% 0)}
+  80%{clip-path:inset(15% 0 15% 0)}
+  100%{clip-path:inset(0 100% 0 0)}
+}
+.links a{margin-left:20px;color:var(--dark);text-decoration:none;font-weight:600}
 .links a:hover{color:var(--green)}
+.about{max-width:1000px;margin:70px auto;padding:0 8%;text-align:center}
+.about h2{color:var(--green);margin-bottom:12px}
 
-.tabs{
-  display:flex;
-  justify-content:center;
-  gap:40px;
-  margin:60px 0
-}
-
+.tabs{display:flex;justify-content:center;gap:30px;margin:60px 0}
 .tab{
   cursor:pointer;
-  font-size:1.1rem;
-  padding-bottom:6px;
-  border-bottom:2px solid transparent;
-  transition:.3s
+  padding:12px 26px;
+  border-radius:30px;
+  background:var(--tab-bg);
+  border:1px solid #333;
+  font-weight:600;
+  transition:.3s;
+  color:var(--dark);
 }
+.tab.active{background:var(--green);color:#121212;border-color:var(--green)}
 
-.tab.active{
-  color:var(--green);
-  border-color:var(--green)
-}
-
-.section{
-  max-width:1100px;
-  margin:auto;
-  padding:40px 8%;
-  display:none;
-  animation:fade .6s ease
-}
-
+.section{display:none;max-width:1100px;margin:auto;padding:40px 8%;animation:fade .5s ease}
 .section.active{display:block}
 
-.card-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:30px
+/* Timeline */
+.timeline{position:relative;margin-left:20px;padding-left:30px}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--green);border-radius:3px}
+.event{
+  margin-bottom:30px;
+  background:var(--card-bg);
+  padding:24px;
+  border-radius:16px;
+  box-shadow:0 8px 20px rgba(0,0,0,.6);
 }
+.event h3{color:var(--green);margin-bottom:6px}
+.event span{font-size:.85rem;color:#777}
 
+/* Education squares */
+.education-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px;margin-top:20px}
+.edu-card{background:var(--card-bg);padding:24px;border-radius:20px;text-align:center;box-shadow:0 8px 18px rgba(0,0,0,.5);transition:.3s}
+.edu-card:hover{transform:translateY(-5px);box-shadow:0 12px 22px rgba(0,255,136,.4)}
+.edu-card h3{color:var(--green)}
+
+/* Skills */
+.skills{display:flex;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.skills span{
+  display:inline-block;
+  margin:10px;
+  padding:14px 24px;
+  border-radius:20px;
+  font-size:.9rem;
+  font-weight:600;
+  background:transparent;
+  border:2px solid;
+}
+.offsec{border-color:rgba(204,76,76,var(--skill-opacity));color:rgba(204,76,76,var(--skill-opacity))}
+.defense{border-color:rgba(51,102,204,var(--skill-opacity));color:rgba(51,102,204,var(--skill-opacity))}
+.neutral{border-color:rgba(85,0,170,var(--skill-opacity));color:rgba(85,0,170,var(--skill-opacity))}
+
+/* Projects and Cards */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:30px}
 .card{
-  background:#0b0b0b;
-  border:1px solid #1a1a1a;
+  background:var(--card-bg);
   padding:28px;
-  border-radius:14px;
-  transition:.3s
+  border-radius:20px;
+  cursor:pointer;
+  box-shadow:0 10px 22px rgba(0,0,0,.5);
+  transition:.3s;
+  text-align:center;
 }
+.card:hover{transform:translateY(-6px);box-shadow:0 14px 28px rgba(0,255,136,.5)}
+.card h3{color:var(--green)}
 
-.card:hover{
-  border-color:var(--green);
-  transform:translateY(-6px)
-}
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;justify-content:center;align-items:center}
+.modal.show{display:flex}
+.modal-box{background:var(--modal-bg);padding:40px;border-radius:24px;max-width:600px;width:90%;animation:pop .4s ease;border:2px solid var(--green);color:#c5c6c7;}
+.modal-box h3{margin-bottom:12px;color:var(--green)}
+.modal-box p{color:#aaa;line-height:1.6}
+.close{margin-top:20px;padding:12px 26px;border:none;background:var(--green);color:#121212;cursor:pointer;border-radius:20px}
 
-.card h3{color:var(--green);margin-bottom:10px}
-
-footer{text-align:center;padding:50px;color:#666}
-
-@keyframes fade{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
-}
+footer{text-align:center;padding:60px;color:#777}
+@keyframes fade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="name">Zaid Kakish</div>
+  <div class="profile">
+    <div class="avatar"></div>
+    <div class="name">Zaid Kakish</div>
+  </div>
   <div class="links">
-    <a href="https://www.linkedin.com/in/zaid-kakish-3058a6233/" target="_blank">LinkedIn</a>
-    <a href="https://github.com/zkak345" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/zaid-kakish-3058a6233/">LinkedIn</a>
+    <a href="https://github.com/zkak345">GitHub</a>
   </div>
 </header>
+
+<div class="about">
+  <h2>About Me</h2>
+  <p>Cybersecurity student who loves to do all thing cyber, ranging from pentesting, defensive security, reverse engineering, and research!</p>
+</div>
 
 <div class="tabs">
   <div class="tab active" data-tab="experience">Experience</div>
   <div class="tab" data-tab="projects">Projects</div>
-  <div class="tab" data-tab="research">Research</div>
   <div class="tab" data-tab="certs">Certifications</div>
 </div>
 
 <section id="experience" class="section active">
-  <div class="card-grid">
-    <div class="card">
-      <h3>Cybersecurity Intern</h3>
-      <p>Performed penetration testing, log analysis, and security assessments.</p>
-    </div>
-    <div class="card">
-      <h3>Security Club Member</h3>
-      <p>Led CTF challenges and reverse engineering workshops.</p>
-    </div>
+  <h2 style="color:var(--green);margin-bottom:20px">Work Experience</h2>
+  <div class="timeline">
+    <div class="event"><h3>Cybersecurity Intern</h3><span>2025</span><p>Penetration testing, vulnerability analysis, and log review.</p></div>
+    <div class="event"><h3>Software Engineering</h3><span>2024</span><p>Organized CTFs and workshops for students.</p></div>
+    <div class="event"><h3>Pentesting Lab Assistant</h3><span>2023</span><p>Guided penetration testing labs and reports.</p></div>
+    <div class="event"><h3>Research Assistant</h3><span>2022</span><p>Assisted with cybersecurity research and analysis.</p></div>
+    <div class="event"><h3>Intern</h3><span>2021</span><p>Entry-level security support and monitoring.</p></div>
+  </div>
+
+  <h2 style="color:var(--green);margin:60px 0 20px">Education</h2>
+  <div class="education-grid">
+    <div class="edu-card"><h3>BSc Computer Science</h3><span>Cybersecurity Track</span></div>
+    <div class="edu-card"><h3>Advanced Security Course</h3><span>Specialization</span></div>
+    <div class="edu-card"><h3>CTF Workshops</h3><span>Training & Mentorship</span></div>
+  </div>
+
+  <h2 style="color:var(--green);margin:60px 0 20px">Skills</h2>
+  <div class="skills">
+    <span class="offsec">Penetration Testing</span>
+    <span class="offsec">Exploit Development</span>
+    <span class="offsec">Reverse Engineering</span>
+    <span class="defense">Incident Response</span>
+    <span class="defense">Monitoring</span>
+    <span class="defense">SIEM Tools</span>
+    <span class="neutral">Python</span>
+    <span class="neutral">Linux</span>
+    <span class="neutral">Networking</span>
   </div>
 </section>
 
 <section id="projects" class="section">
   <div class="card-grid">
-    <div class="card">
-      <h3>Metasploitable Pentest</h3>
-      <p>Full exploitation cycle with report and mitigations.</p>
-    </div>
-    <div class="card">
-      <h3>Android Malware Analysis</h3>
-      <p>Static and dynamic reverse engineering.</p>
-    </div>
-  </div>
-</section>
-
-<section id="research" class="section">
-  <div class="card-grid">
-    <div class="card">
-      <h3>CryptoGuard Analysis</h3>
-      <p>Studied ransomware detection techniques.</p>
-    </div>
+    <div class="card" onclick="openModal('CTF Challenges','Solved reverse, crypto, and exploitation challenges.')"><h3>CTFs</h3></div>
+    <div class="card" onclick="openModal('Cyber Club Leadership','Organized workshops and mentoring sessions.')"><h3>Cyber Club</h3></div>
+    <div class="card" onclick="openModal('Pentesting Labs','Performed full attack simulations with reporting.')"><h3>Pentesting Labs</h3></div>
   </div>
 </section>
 
 <section id="certs" class="section">
   <div class="card-grid">
-    <div class="card">
-      <h3>CompTIA CySA+</h3>
-      <p>Cybersecurity Analyst Certification</p>
-    </div>
-    <div class="card">
-      <h3>CompTIA Security+</h3>
-      <p>Foundational Security Concepts</p>
-    </div>
+    <div class="card" onclick="openModal('CompTIA CySA+','Cybersecurity Analyst certification focusing on detection and response.')"><h3>CySA+</h3></div>
+    <div class="card" onclick="openModal('Security+','Fundamental cybersecurity knowledge and practices.')"><h3>Security+</h3></div>
   </div>
 </section>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
+    <button class="close" onclick="closeModal()">Close</button>
+  </div>
+</div>
 
 <footer>© 2026 Cyber Portfolio</footer>
 
 <script>
-const tabs=document.querySelectorAll('.tab')
-const sections=document.querySelectorAll('.section')
+const tabs=document.querySelectorAll('.tab');
+const sections=document.querySelectorAll('.section');
 
 tabs.forEach(tab=>{
   tab.onclick=()=>{
-    tabs.forEach(t=>t.classList.remove('active'))
-    sections.forEach(s=>s.classList.remove('active'))
+    tabs.forEach(t=>t.classList.remove('active'));
+    sections.forEach(s=>s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+});
 
-    tab.classList.add('active')
-    document.getElementById(tab.dataset.tab).classList.add('active')
-  }
-})
+function openModal(title,text){
+  document.getElementById('modalTitle').innerText=title;
+  document.getElementById('modalText').innerText=text;
+  document.getElementById('modal').classList.add('show');
+}
+
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+}
 </script>
 
 </body>
